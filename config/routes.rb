@@ -1,5 +1,4 @@
 OpenlyYours::Application.routes.draw do
-  devise_for :user
 
   resources :letters
 
@@ -7,6 +6,8 @@ OpenlyYours::Application.routes.draw do
     get 'letters'
     get 'followed_letters'
   end
+
+  root to: "letters#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

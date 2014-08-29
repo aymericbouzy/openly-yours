@@ -1,5 +1,5 @@
 class LettersController < ApplicationController
-  before_filter :belongs_to_current_user
+  before_filter :belongs_to_current_user, except: [:index, :show]
 
   def index
   end

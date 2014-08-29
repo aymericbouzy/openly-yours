@@ -1,5 +1,7 @@
 OpenlyYours::Application.routes.draw do
 
+  resources :users
+
   resources :letters
 
   resources :users, only: [:show] do

@@ -1,0 +1,3 @@
+class LettersController < ApplicationController
+
+end

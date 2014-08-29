@@ -1,6 +1,9 @@
 OpenlyYours::Application.routes.draw do
-  resources :users do
+  devise_for :user
+
+  resources :users, only: [:show] do
     resources :letters
+    resources :followed_letters
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,5 +1,5 @@
 class LettersController < ApplicationController
-  before_action :set_letter, only: [:show, :edit, :update, :destroy]
+  before_action :set_letter, only: [:show]
 
   # GET /letters
   # GET /letters.json

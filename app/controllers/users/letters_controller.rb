@@ -1,11 +1,11 @@
-class Users::LettersController < ApplicationController
-  before_action :set_users_letter, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+class Users::LettersController < Users::BaseController
+  before_action :set_users_letter, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :authenticate_user!, except: [:index]
 
   # GET /users/letters
   # GET /users/letters.json
   def index
-    @users_letters = Users::Letter.all
+    @users_letters = @user.letters
   end
 
   # GET /users/letters/1
@@ -16,7 +16,7 @@ class Users::LettersController < ApplicationController
 
   # GET /users/letters/new
   def new
-    @users_letter = Users::Letter.new
+    @users_letter = Letter.new
   end
 
   # GET /users/letters/1/edit
@@ -26,7 +26,7 @@ class Users::LettersController < ApplicationController
   # POST /users/letters
   # POST /users/letters.json
   def create
-    @users_letter = Users::Letter.new(users_letter_params)
+    @users_letter = Letter.new(users_letter_params)
 
     respond_to do |format|
       if @users_letter.save
@@ -63,10 +63,18 @@ class Users::LettersController < ApplicationController
     end
   end
 
+  def rough_drafts
+    @users_letters = Letter.where(rough_draft: true)
+  end
+
+  def publish
+    @letter.update(rough_draft: false)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_users_letter
-      @users_letter = Users::Letter.find(params[:id])
+      @users_letter = Letter.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

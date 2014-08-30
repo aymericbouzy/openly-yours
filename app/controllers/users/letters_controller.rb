@@ -1,5 +1,6 @@
 class Users::LettersController < ApplicationController
   before_action :set_users_letter, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /users/letters
   # GET /users/letters.json

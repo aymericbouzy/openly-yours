@@ -1,13 +1,19 @@
 OpenlyYours::Application.routes.draw do
 
   devise_for :users
-  resources :users
 
-  resources :letters
+  resources :letters, only: [:index, :show]
 
-  resources :users, only: [:show] do
-    get 'letters'
-    get 'followed_letters'
+  resources :users, only: [:index, :show] do
+    resources :letters, only: [:index, :show] do
+      get 'followed', on: :collection
+    end
+  end
+
+  resource :me, only: [:show, :edit, :update] do
+    resources :letters do
+      get 'followed', on: :collection
+    end
   end
 
   root to: "letters#index"

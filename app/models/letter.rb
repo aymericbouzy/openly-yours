@@ -1,7 +1,8 @@
 class Letter
+  include Mongoid::Document
+
   field :title
   field :text
-  field :to
 
   belongs_to :user
 end

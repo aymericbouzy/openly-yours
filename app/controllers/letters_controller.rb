@@ -22,6 +22,10 @@ class LettersController < ApplicationController
     render 'show'
   end
 
+  def followers
+    @followships = @letter.followships.sort { |x, y| y.created_at <=> x.created_at }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_letter

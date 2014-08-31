@@ -4,6 +4,7 @@ OpenlyYours::Application.routes.draw do
 
   resources :letters, only: [:index, :show] do
     put 'follow'
+    get 'followers'
   end
 
   resources :users, only: [:index, :show] do

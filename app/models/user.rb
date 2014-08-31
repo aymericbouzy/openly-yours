@@ -44,7 +44,7 @@ class User
   has_many :letters
 
   def follow(letter)
-    self.followships.create(letter_id: letter.id)
+    self != letter.author && self.followships.create(letter_id: letter.id)
   end
 
   def followed?(letter)

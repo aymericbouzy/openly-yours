@@ -10,10 +10,11 @@ class Users::LettersController < Users::BaseController
   # GET /users/letters/1
   # GET /users/letters/1.json
   def show
+    redirect_to letter_path(@letter)
   end
 
   def followed
-    @letters = @user.followed_letters
+    @letters = @user.followed_letters.sort { |x, y| y.created_at <=> x.created_at }
   end
 
   private

@@ -10,6 +10,7 @@ class Me::LettersController < Me::BaseController
   # GET /me/letters/1
   # GET /me/letters/1.json
   def show
+    redirect_to letter_path(@letter)
   end
 
   # GET /me/letters/new
@@ -62,7 +63,7 @@ class Me::LettersController < Me::BaseController
   end
 
   def followed
-    @letters = current_user.followed_letters
+    @letters = current_user.followed_letters.sort { |x, y| y.created_at <=> x.created_at }
   end
 
   def rough_drafts

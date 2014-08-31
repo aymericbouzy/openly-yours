@@ -3,7 +3,8 @@ class Letter
 
   field :title
   field :text
-  field :to
+  field :recipient
+  field :recipient_user_id
   field :rough_draft, type: Boolean
 
   belongs_to :user

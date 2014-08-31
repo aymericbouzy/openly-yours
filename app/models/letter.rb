@@ -7,5 +7,11 @@ class Letter
 
   belongs_to :author, class_name: "User"
   has_many :followships, dependent: :destroy
-  has_many :followers, through: :followship, class_name: "User"
+  has_one :recipient
+
+  def followers
+    self.followships.collect do |f|
+      f.user
+    end
+  end
 end

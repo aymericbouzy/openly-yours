@@ -40,8 +40,13 @@ class User
   field :last_name
 
   has_many :followships, dependent: :destroy
-  has_many :followed_letters, through: :followship, class_name: "Letter"
   has_many :letters
+
+  def followed_letters
+    self.followships.collect do |f|
+      f.letter
+    end
+  end
 
   def follow(letter)
     self != letter.author && self.followships.create(letter_id: letter.id)

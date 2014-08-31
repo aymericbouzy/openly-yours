@@ -21,6 +21,10 @@ OpenlyYours::Application.routes.draw do
     end
   end
 
+  resources :recipient, only: [:index, :show] do
+    get 'letters'
+  end
+  
   root to: "letters#index"
 
   # The priority is based upon order of creation: first created -> highest priority.

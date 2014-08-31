@@ -1,11 +1,10 @@
-class Users::LettersController < ApplicationController
-  before_action :set_user
-  before_action :set_users_letter, only: [:show]
+class Users::LettersController < Users::BaseController
+  before_action :set_letter, only: [:show]
 
   # GET /users/letters
   # GET /users/letters.json
   def index
-    @users_letters = @user.letters
+    @letters = @user.letters.where(rough_draft: false)
   end
 
   # GET /users/letters/1
@@ -14,21 +13,17 @@ class Users::LettersController < ApplicationController
   end
 
   def followed
-    Letter.where(id: @user.followed_letters)
+    @letters = Letter.where(id: @user.followed_letters)
   end
 
   private
-    def set_user
-      @user = User.find(params[:user_id])
-    end
-
     # Use callbacks to share common setup or constraints between actions.
-    def set_users_letter
-      @users_letter = Letter.find(params[:id])
+    def set_letter
+      @letter = Letter.where(id: params[:id], rough_draft: false)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def users_letter_params
-      params[:users_letter]
+    def letter_params
+      params[:letter]
     end
 end

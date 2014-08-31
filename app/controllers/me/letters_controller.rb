@@ -1,10 +1,10 @@
 class Me::LettersController < Me::BaseController
-  before_action :set_users_letter, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :set_letter, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /me/letters
   # GET /me/letters.json
   def index
-    @users_letters = current_user.letters
+    @letters = current_user.letters
   end
 
   # GET /me/letters/1
@@ -14,7 +14,7 @@ class Me::LettersController < Me::BaseController
 
   # GET /me/letters/new
   def new
-    @users_letter = Letter.new
+    @letter = Letter.new
   end
 
   # GET /me/letters/1/edit
@@ -24,15 +24,15 @@ class Me::LettersController < Me::BaseController
   # POST /me/letters
   # POST /me/letters.json
   def create
-    @users_letter = Letter.new(users_letter_params)
+    @letter = Letter.new(letter_params)
 
     respond_to do |format|
-      if @users_letter.save
-        format.html { redirect_to @users_letter, notice: 'Letter was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @users_letter }
+      if @letter.save
+        format.html { redirect_to @letter, notice: 'Letter was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @letter }
       else
         format.html { render action: 'new' }
-        format.json { render json: @users_letter.errors, status: :unprocessable_entity }
+        format.json { render json: @letter.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,12 +41,12 @@ class Me::LettersController < Me::BaseController
   # PATCH/PUT /me/letters/1.json
   def update
     respond_to do |format|
-      if @users_letter.update(users_letter_params)
-        format.html { redirect_to @users_letter, notice: 'Letter was successfully updated.' }
+      if @letter.update(letter_params)
+        format.html { redirect_to @letter, notice: 'Letter was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @users_letter.errors, status: :unprocessable_entity }
+        format.json { render json: @letter.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,7 +54,7 @@ class Me::LettersController < Me::BaseController
   # DELETE /me/letters/1
   # DELETE /me/letters/1.json
   def destroy
-    @users_letter.destroy
+    @letter.destroy
     respond_to do |format|
       format.html { redirect_to users_letters_url }
       format.json { head :no_content }
@@ -66,7 +66,7 @@ class Me::LettersController < Me::BaseController
   end
 
   def rough_drafts
-    @users_letters = Letter.where(rough_draft: true)
+    @letters = Letter.where(rough_draft: true)
   end
 
   def publish
@@ -75,12 +75,12 @@ class Me::LettersController < Me::BaseController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_users_letter
-      @users_letter = Letter.find(params[:id])
+    def set_letter
+      @letter = Letter.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def users_letter_params
-      params[:users_letter]
+    def letter_params
+      params[:letter]
     end
 end

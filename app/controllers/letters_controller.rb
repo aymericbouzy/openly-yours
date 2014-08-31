@@ -4,7 +4,7 @@ class LettersController < ApplicationController
   # GET /letters
   # GET /letters.json
   def index
-    @letters = Letter.all
+    @letters = Letter.where(rough_draft: false)
   end
 
   # GET /letters/1
@@ -15,6 +15,6 @@ class LettersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_letter
-      @letter = Letter.find(params[:id])
+      @letter = Letter.where(id: params[:id], rough_draft: false)
     end
 end

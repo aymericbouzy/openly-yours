@@ -40,7 +40,6 @@ class User
   field :first_name
   field :last_name
 
-  field :followed_letters, type: Array, default: []
-
-  has_many :letters #??
+  has_many :followed_letters, -> { distinct }, through: :star, class_name: "Letter"
+  has_many :letters
 end

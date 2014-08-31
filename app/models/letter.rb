@@ -3,9 +3,8 @@ class Letter
 
   field :title
   field :text
-  field :recipient
-  field :recipient_user_id
   field :rough_draft, type: Boolean
 
-  belongs_to :user
+  belongs_to :author, class_name: "User"
+  has_many :followers, -> { distinct }, through: :followship, class_name: "User"
 end

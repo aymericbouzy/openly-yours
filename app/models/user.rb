@@ -36,10 +36,17 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
-  field :email
   field :first_name
   field :last_name
 
   has_many :followed_letters, -> { distinct }, through: :star, class_name: "Letter"
   has_many :letters
+
+  def follow(letter)
+    self.followships.create(letter_id: letter.id)
+  end
+
+  def followed?(letter)
+    self.followed_letters.find(letter.id).present?
+  end
 end

@@ -1,5 +1,6 @@
 class LettersController < ApplicationController
-  before_action :set_letter, only: [:show]
+  before_action :set_letter, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /letters
   # GET /letters.json
@@ -10,6 +11,15 @@ class LettersController < ApplicationController
   # GET /letters/1
   # GET /letters/1.json
   def show
+  end
+
+  def follow
+    if current_user.follow(@letter)
+      flash[:notice] = "success"
+    else
+      flash[:alert] = "error"
+    end
+    render 'show'
   end
 
   private

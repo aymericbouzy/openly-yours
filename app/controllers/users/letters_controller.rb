@@ -13,7 +13,7 @@ class Users::LettersController < Users::BaseController
   end
 
   def followed
-    @letters = Letter.where(id: @user.followed_letters)
+    @letters = @user.followed_letters
   end
 
   private

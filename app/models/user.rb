@@ -39,7 +39,8 @@ class User
   field :first_name
   field :last_name
 
-  has_many :followed_letters, -> { distinct }, through: :star, class_name: "Letter"
+  has_many :followships, dependent: :destroy
+  has_many :followed_letters, through: :followship, class_name: "Letter"
   has_many :letters
 
   def follow(letter)

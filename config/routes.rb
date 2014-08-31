@@ -2,7 +2,9 @@ OpenlyYours::Application.routes.draw do
 
   devise_for :users
 
-  resources :letters, only: [:index, :show]
+  resources :letters, only: [:index, :show] do
+    put 'follow'
+  end
 
   resources :users, only: [:index, :show] do
     resources :letters, only: [:index, :show] do

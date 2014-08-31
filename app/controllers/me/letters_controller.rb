@@ -62,7 +62,7 @@ class Me::LettersController < Me::BaseController
   end
 
   def followed
-    @letters = Letter.where(id: current_user.followed_letters)
+    @letters = current_user.followed_letters
   end
 
   def rough_drafts

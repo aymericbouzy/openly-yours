@@ -4,9 +4,9 @@ class Recipient
   field :categorie
 
   has_many :letters
+  has_one :user
 
-  valitdate :categorie, inclusion: { in categories,
-    message: "%{value} is not a valid categorie" }
+  validate :categorie, inclusion: { in categories, message: "%{value} is not a valid categorie" }
 
   def self.categories
     [:person, :organization, :group]

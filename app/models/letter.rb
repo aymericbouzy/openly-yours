@@ -14,4 +14,8 @@ class Letter
       f.user
     end
   end
+
+  def published?
+    !self.rough_draft
+  end
 end

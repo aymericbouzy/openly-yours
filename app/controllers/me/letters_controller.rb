@@ -1,5 +1,6 @@
 class Me::LettersController < Me::BaseController
   before_action :set_letter, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :deny_access_after_publish, only: [:edit, :update, :destroy, :publish]
 
   # GET /me/letters
   # GET /me/letters.json
@@ -83,5 +84,12 @@ class Me::LettersController < Me::BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def letter_params
       params[:letter]
+    end
+
+    def deny_access_after_publish
+      if @letter.published?
+        flash[:alert] = "refused"
+        render 'show' and return
+      end
     end
 end

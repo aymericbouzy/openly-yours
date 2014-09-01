@@ -11,7 +11,9 @@ class Me::LettersController < Me::BaseController
   # GET /me/letters/1
   # GET /me/letters/1.json
   def show
-    redirect_to letter_path(@letter)
+    if @letter.published?
+      redirect_to letter_path(@letter)
+    end
   end
 
   # GET /me/letters/new
@@ -26,7 +28,8 @@ class Me::LettersController < Me::BaseController
   # POST /me/letters
   # POST /me/letters.json
   def create
-    @letter = Letter.new(letter_params)
+    @letter = current_user.letters.new(letter_params)
+    @letter.rough_draft = true
 
     respond_to do |format|
       if @letter.save
@@ -83,13 +86,13 @@ class Me::LettersController < Me::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def letter_params
-      params[:letter]
+      params.require(:letter).permit(:title, :text, :recipient_id)
     end
 
     def deny_access_after_publish
       if @letter.published?
         flash[:alert] = "refused"
-        render 'show' and return
+        redirect_to letter_path(@letter)
       end
     end
 end

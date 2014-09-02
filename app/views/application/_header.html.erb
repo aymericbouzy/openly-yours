@@ -4,6 +4,7 @@
 			<li <%= "class='active'" if request.path == "/letters" %>><%= link_to "Letters", letters_path %></li>
       <li <%= "class='active'" if request.path == "/users" %>><%= link_to "Authors", users_path %></li>
       <li <%= "class='active'" if request.path == "/recipients" %>><%= link_to "Recipients", recipients_path %></li>
+			<li <%= "class='active'" if request.path == "/me/letters/new" %>><%= link_to "New letter", new_me_letter_path %></li>
 		</ul>
 		<ul class="pull-center">
 			<li>

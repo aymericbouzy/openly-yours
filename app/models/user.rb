@@ -2,6 +2,7 @@ require 'devise'
 
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -41,6 +42,16 @@ class User
 
   has_many :followships, dependent: :destroy
   has_many :letters
+
+  def identity
+    if self.first_name.blank? && self.last_name.blank?
+      self.email
+    elsif self.first_name.blank? || self.last_name.blank?
+      self.first_name + self.last_name
+    else
+      self.first_name + " " + self.last_name
+    end
+  end
 
   def followed_letters
     self.followships.collect do |f|

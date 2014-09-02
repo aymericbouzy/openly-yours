@@ -1,23 +1,25 @@
 <header id="header">
 	<nav id="nav">
 		<ul class="pull-left">
-			<li><%= link_to "Letters", letters_path %></li>
-      <li><%= link_to "Authors", users_path %></li>
-      <li><%= link_to "Recipients", recipients_path %></li>
+			<li <%= "class='active'" if request.path == "/letters" %>><%= link_to "Letters", letters_path %></li>
+      <li <%= "class='active'" if request.path == "/users" %>><%= link_to "Authors", users_path %></li>
+      <li <%= "class='active'" if request.path == "/recipients" %>><%= link_to "Recipients", recipients_path %></li>
 		</ul>
 		<ul class="pull-center">
 			<li>
 				<%= link_to root_path do %>
-					<div id="logo"></div>
+					<div id="logo">Openly yours</div>
 				<% end %>
 			</li>
 		</ul>
 		<ul class="pull-right">
-			<% if user_loged_in? %>
-				<%= navbar_profile %>
-			<% else %>
-				<%= inline_login_form %>
-			<% end %>
+			<li>
+				<% if current_user %>
+					<%= render 'navbar_profile' %>
+				<% else %>
+					<%= render 'inline_login_form' %>
+				<% end %>
+			</li>
 		</ul>
 	</nav>
 </header>

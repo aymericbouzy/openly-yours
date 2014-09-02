@@ -1,28 +1,23 @@
 <header id="header">
-	<h1>Openly Yours</h1>
 	<nav id="nav">
-		<ul>
+		<ul class="pull-left">
 			<li><%= link_to "Letters", letters_path %></li>
       <li><%= link_to "Authors", users_path %></li>
       <li><%= link_to "Recipients", recipients_path %></li>
+		</ul>
+		<ul class="pull-center">
 			<li>
-				<a href="" class="icon fa-angle-down">Layouts</a>
-				<ul>
-					<li><a href="generic.html">Generic</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="elements.html">Elements</a></li>
-					<li>
-						<a href="">Submenu</a>
-						<ul>
-							<li><a href="#">Option One</a></li>
-							<li><a href="#">Option Two</a></li>
-							<li><a href="#">Option Three</a></li>
-							<li><a href="#">Option Four</a></li>
-						</ul>
-					</li>
-				</ul>
+				<%= link_to root_path do %>
+					<div id="logo"></div>
+				<% end %>
 			</li>
-			<li><a href="#" class="button">Sign Up</a></li>
+		</ul>
+		<ul class="pull-right">
+			<% if user_loged_in? %>
+				<%= navbar_profile %>
+			<% else %>
+				<%= inline_login_form %>
+			<% end %>
 		</ul>
 	</nav>
 </header>

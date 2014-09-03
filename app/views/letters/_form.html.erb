@@ -1,4 +1,4 @@
-<%= form_for(@letter, url: new_letter_path) do |f| %>
+<%= bootstrap_form_for(@letter, as: :letter, url: me_letters_path) do |f| %>
   <% if @letter.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@letter.errors.count, "error") %> prohibited this letter from being saved:</h2>
@@ -10,6 +10,12 @@
       </ul>
     </div>
   <% end %>
+
+  <%= f.text_field :title %>
+
+  <%= f.text_area :text, rows: 20 %>
+
+  <%= f.text_field :recipient %>
 
   <div class="actions">
     <%= f.submit %>

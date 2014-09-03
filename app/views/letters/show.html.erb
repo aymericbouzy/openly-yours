@@ -1,3 +1,5 @@
 <h2><%= @letter.title %></h2>
 
-<%= link_to 'Back', letters_path %>
+<%= render 'author_aside', author: @letter.author %>
+
+<%= sanitize @letter.text %>

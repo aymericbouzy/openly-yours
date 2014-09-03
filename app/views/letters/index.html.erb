@@ -1,21 +1,3 @@
-<h1>Listing letters</h1>
+<h1>Discover letters</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @letters.each do |letter| %>
-      <tr>
-        <td><%= link_to 'Show', letter %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br/>
+<%= render 'letters_table', letters: @letters, display_author: true, editable: false %>

@@ -1,0 +1,8 @@
+<aside class="author-aside">
+  <p>
+    <%= link_to author.identity, user_path(author) %>
+  </p>
+  <p>
+    <%= link_to pluralize(author.published_letters.count, "published letter"), root_user_letters_path(author) %>
+  </p>
+</aside>

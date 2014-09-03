@@ -9,7 +9,7 @@
   Created at <%= user.created_at.to_s %>
 </p>
 <p>
-  <%= link_to pluralize(user.published_letters.count, "published letter"), user_letters_path(user) %>
+  <%= link_to pluralize(user.published_letters.count, "published letter"), root_user_letters_path(user) %>
 </p>
 <p>
   <%= link_to pluralize(user.followships.count, "followed letter"), followed_user_letters_path(user) %>

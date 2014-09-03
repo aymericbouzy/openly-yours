@@ -8,16 +8,20 @@ OpenlyYours::Application.routes.draw do
   end
 
   resources :users, only: [:index, :show] do
-    resources :letters, only: [:index, :show] do
-      get 'followed', on: :collection
+    resources :letters, only: [:show] do
+      collection do
+        get 'followed'
+        root to: "letters#user_index"
+      end
     end
   end
 
   resource :me, only: [:show, :edit, :update] do
-    resources :letters do
+    resources :letters, except: [:index] do
       collection do
         get 'followed'
         get 'rough_drafts'
+        root to: "letters#me_index"
       end
       put 'publish', on: :member
     end

@@ -1,20 +1,23 @@
 class LettersController < ApplicationController
   before_action :set_user
-  before_action :set_letter, except: [:index, :followed, :rough_drafts]
+  before_action :set_letter, except: [:index, :user_index, :me_index, :new, :followed, :rough_drafts]
   before_action :letter_unpublished_yet!, only: [:edit, :update, :destroy, :publish]
-  before_action :authenticate_user!, except: [:index, :show, :follow, :followers, :followed, :rough_drafts]
+  before_action :authenticate_user!, except: [:index, :user_index, :show, :follow, :followers, :followed, :rough_drafts]
 
   # GET /letters
   # GET /letters.json
   # GET /me/letters
   # GET /users/1/letters
   def index
-    if @user.present?
-      @letters = @user.letters
-    else
-      @letters = Letter.all
-    end
-    @letters = @letters.where(rough_draft: false)
+    @letters = Letter.where(rough_draft: false)
+  end
+
+  def user_index
+    @letters = @user.letters.where(rough_draft: false)
+  end
+
+  def me_index
+    @letters = @user.letters.where(rough_draft: false)
   end
 
   # GET /letters/1

@@ -13,13 +13,15 @@
 		</div>
 		<div class="pull-right">
 			<ul class="nav nav-pills">
-				<li>
-					<% if current_user %>
+				<% if user_signed_in? %>
+					<li class="dropdown">
 						<%= render 'navbar_profile' %>
-					<% else %>
+					</li>
+				<% else %>
+					<li>
 						<%= render 'inline_login_form' %>
-					<% end %>
-				</li>
+					</li>
+				<% end %>
 			</ul>
 		</div>
 	</nav>

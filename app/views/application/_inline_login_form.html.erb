@@ -1,11 +1,8 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "form-inline") do |f| %>
+<%= form_for(@new_user, as: :user, url: session_path(:user), class: "form-inline") do |f| %>
   <%= f.email_field :email, autofocus: true, placeholder: :email %>
 
   <%= f.password_field :password, autocomplete: "off", placeholder: :password %>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Log in" %></div>
+  <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+  <%= f.submit "Log in", class: "btn btn-default"%>
 <% end %>

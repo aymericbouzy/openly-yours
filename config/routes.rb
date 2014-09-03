@@ -15,8 +15,10 @@ OpenlyYours::Application.routes.draw do
 
   resource :me, only: [:show, :edit, :update] do
     resources :letters do
-      get 'followed', on: :collection
-      get 'rough_drafts', on: :collection
+      collection do
+        get 'followed'
+        get 'rough_drafts'
+      end
       put 'publish', on: :member
     end
   end

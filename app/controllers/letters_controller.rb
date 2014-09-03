@@ -1,4 +1,5 @@
 class LettersController < ApplicationController
+  before_action :set_user
   before_action :set_letter, except: [:index]
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -30,5 +31,14 @@ class LettersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_letter
       @letter = Letter.where(id: params[:id], rough_draft: false)
+    end
+
+    def set_user
+      if params[:user_id].present?
+        @user = User.find(params[:id])
+      elsif request.env["PATH_INFO"].split("/").first == "me"
+        authenticate_user!
+        @user = current_user
+      end
     end
 end

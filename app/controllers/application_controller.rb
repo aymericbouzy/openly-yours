@@ -3,15 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def resource_name
-    :user
-  end
+  before_filter :set_new_user
 
-  def resource
-    @resource ||= User.new
-  end
-
-  def devise_mapping
-    @devise_mapping ||= Devise.mappings[:user]
+  def set_new_user
+    @new_user ||= User.new
   end
 end

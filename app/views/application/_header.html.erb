@@ -1,24 +1,26 @@
-<header id="header">
-	<ul class="nav nav-pills">
-		<li id="nav-letters"><%= link_to "Letters", letters_path %></li>
-    <li id="nav-users"><%= link_to "Authors", users_path %></li>
-    <li id="nav-recipients"><%= link_to "Recipients", recipients_path %></li>
-		<li id="nav-new-letter"><%= link_to "New letter", new_me_letter_path %></li>
-	</ul>
-	<ul class="pull-center nav nav-pills">
-		<li>
-			<%= link_to root_path do %>
-				<div id="logo">Openly yours</div>
+<header class="container">
+	<nav>
+		<ul class="nav nav-pills">
+			<li id="nav-letters"><%= link_to "Letters", letters_path %></li>
+			<li id="nav-users"><%= link_to "Authors", users_path %></li>
+			<li id="nav-recipients"><%= link_to "Recipients", recipients_path %></li>
+			<li id="nav-new-letter"><%= link_to "New letter", new_me_letter_path %></li>
+		</ul>
+		<div class="pull-center">
+			<%= link_to root_path, class: "btn" do %>
+				<i class="icon icon-rooster-logo"></i>
 			<% end %>
-		</li>
-	</ul>
-	<ul class="pull-right">
-		<li>
-			<% if current_user %>
-				<%= render 'navbar_profile' %>
-			<% else %>
-				<%= render 'inline_login_form' %>
-			<% end %>
-		</li>
-	</ul>
+		</div>
+		<div class="pull-right">
+			<ul class="nav nav-pills">
+				<li>
+					<% if current_user %>
+						<%= render 'navbar_profile' %>
+					<% else %>
+						<%= render 'inline_login_form' %>
+					<% end %>
+				</li>
+			</ul>
+		</div>
+	</nav>
 </header>

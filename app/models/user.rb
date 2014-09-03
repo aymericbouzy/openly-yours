@@ -47,9 +47,9 @@ class User
     if self.first_name.blank? && self.last_name.blank?
       self.email
     elsif self.first_name.blank? || self.last_name.blank?
-      self.first_name + self.last_name
+      self.first_name.capitalize + self.last_name.capitalize
     else
-      self.first_name + " " + self.last_name
+      self.first_name.capitalize + " " + self.last_name.capitalize
     end
   end
 

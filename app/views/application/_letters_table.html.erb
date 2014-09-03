@@ -28,6 +28,9 @@
             <%= link_to me_letter_path(letter), class: "btn btn-default", method: :delete do %>
               Destroy
             <% end %>
+            <%= link_to publish_me_letter_path(letter), class: "btn btn-default", method: :put do %>
+              Publish
+            <% end %>
           </td>
           <% end %>
         </tr>

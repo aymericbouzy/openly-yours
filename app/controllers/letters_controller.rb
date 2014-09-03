@@ -94,11 +94,15 @@ class LettersController < ApplicationController
   # GET /me/letters/followed
   def followed
     @letters = @user.followed_letters.sort { |x, y| y.created_at <=> x.created_at }
-    render 'index'
   end
 
   def publish
-    @letter.update(rough_draft: false, published_at: Time.now)
+    if @letter.valid_for_publishing? && @letter.update(rough_draft: false, published_at: Time.now)
+      flash[:notice] = "success"
+    else
+      flash[:alert] = "error"
+    end
+    render 'show'
   end
 
   def rough_drafts

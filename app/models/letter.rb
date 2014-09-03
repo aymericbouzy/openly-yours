@@ -23,4 +23,8 @@ class Letter
   def recipient
     Recipient.new(name: "Fake recipient")
   end
+
+  def valid_for_publishing?
+    !(self.title.blank? || self.text.blank? || self.author.nil? || self.recipient.nil?)
+  end
 end

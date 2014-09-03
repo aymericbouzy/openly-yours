@@ -9,8 +9,13 @@
   Created at <%= user.created_at.to_s %>
 </p>
 <p>
-  <%= user.letters.count %> letters.
+  <%= link_to pluralize(user.published_letters.count, "published letter"), user_letters_path(user) %>
 </p>
 <p>
-  <%= user.followships.count %> followed letters.
+  <%= link_to pluralize(user.followships.count, "followed letter"), followed_user_letters_path(user) %>
 </p>
+<% if user == current_user %>
+  <p>
+    <%= link_to pluralize(user.rough_drafts.count, "rough draft"), rough_drafts_me_letters_path %>
+  </p>
+<% end %>

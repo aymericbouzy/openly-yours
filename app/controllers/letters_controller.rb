@@ -1,8 +1,8 @@
 class LettersController < ApplicationController
   before_action :set_user
-  before_action :set_letter, except: [:index, :followed]
+  before_action :set_letter, except: [:index, :followed, :rough_drafts]
   before_action :letter_unpublished_yet!, only: [:edit, :update, :destroy, :publish]
-  before_action :authenticate_user!, except: [:index, :show, :follow, :followers, :followed]
+  before_action :authenticate_user!, except: [:index, :show, :follow, :followers, :followed, :rough_drafts]
 
   # GET /letters
   # GET /letters.json
@@ -91,10 +91,15 @@ class LettersController < ApplicationController
   # GET /me/letters/followed
   def followed
     @letters = @user.followed_letters.sort { |x, y| y.created_at <=> x.created_at }
+    render 'index'
   end
 
   def publish
-    @letter.update(rough_draft: false)
+    @letter.update(rough_draft: false, published_at: Time.now)
+  end
+
+  def rough_drafts
+    @letters = @user.rough_drafts
   end
 
   private
@@ -105,8 +110,8 @@ class LettersController < ApplicationController
 
     def set_user
       if params[:user_id].present?
-        @user = User.find(params[:id])
-      elsif request.env["PATH_INFO"].split("/").first == "me"
+        @user = User.find(params[:user_id])
+      elsif request.env["PATH_INFO"].split("/")[1] == "me"
         authenticate_user!
         @user = current_user
       end

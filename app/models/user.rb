@@ -53,6 +53,14 @@ class User
     end
   end
 
+  def rough_drafts
+    self.letters.where(rough_draft: true)
+  end
+
+  def published_letters
+    self.letters.where(rough_draft: false)
+  end
+
   def followed_letters
     self.followships.collect do |f|
       f.letter
@@ -60,7 +68,7 @@ class User
   end
 
   def follow(letter)
-    self != letter.author && self.followships.create(letter_id: letter.id)
+    self != letter.author && self.followships.create(letter_id: letter.id.to_s)
   end
 
   def followed?(letter)

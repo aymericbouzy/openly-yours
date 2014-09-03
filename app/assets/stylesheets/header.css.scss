@@ -1,0 +1,18 @@
+
+  $nav-link-hover-bg: transparent;
+  $nav-pills-border-radius: 6px;
+  $nav-link-color: white;
+  $nav-link-hover-color: #FF7F50;
+
+  .nav-pills {
+    > li {
+      > a {
+        color: $nav-link-color;
+        border: solid 1px transparent;
+        &:hover {
+          color: $nav-link-hover-color;
+          border: solid 1px $nav-link-hover-color;
+        }
+      }
+    }
+  }

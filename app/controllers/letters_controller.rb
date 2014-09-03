@@ -105,7 +105,7 @@ class LettersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_letter
-      @letter = Letter.where(id: params[:id])
+      @letter = Letter.find(params[:id])
     end
 
     def set_user

@@ -8,7 +8,7 @@ class Letter
 
   belongs_to :author, class_name: "User"
   has_many :followships, dependent: :destroy
-  has_one :recipient
+  # has_one :recipient
 
   def followers
     self.followships.collect do |f|
@@ -18,5 +18,9 @@ class Letter
 
   def published?
     !self.rough_draft
+  end
+
+  def recipient
+    Recipient.new(name: "Fake recipient")
   end
 end

@@ -1,0 +1,35 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Recipient</th>
+      <% if author %>
+      <th>Author</th>
+      <% end %>
+      <% if editable %>
+      <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% letters.each do |letter| %>
+      <tr>
+        <td><%= link_to letter.title, letter %></td>
+        <td><%= link_to letter.recipient.name, letter.recipient %></td>
+        <% if author %>
+        <td><%= link_to letter.author.identity, letter.author %></td>
+        <% end %>
+        <% if editable %>
+        <td>
+          <%= link_to edit_me_letter_path(letter), class: "btn btn-default" do %>
+            Edit
+          <% end %>
+          <%= link_to me_letter_path(letter), class: "btn btn-default", method: :delete do %>
+            Destroy
+          <% end %>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

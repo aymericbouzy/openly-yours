@@ -14,7 +14,7 @@
   <% end %>
 
   <%= f.hidden_field :name %>
-  <%= f.select select_options(Recipient.categories, @recipient.category), label: "Choose a category for that recipient" %>
+  <%= f.select :category, options_from_array(Recipient.categories, @recipient.category), label: "Choose a category for that recipient" %>
 
   <div class="actions">
     <%= f.submit %>

@@ -25,7 +25,7 @@ class RecipientsController < ApplicationController
 
     respond_to do |format|
       if @recipient.save
-        format.html { redirect_to new_letter_path, notice: 'Recipient was successfully created.' }
+        format.html { redirect_to new_me_letter_path, notice: 'Recipient was successfully created.' }
         format.json { render action: 'show', status: :created, location: @recipient }
       else
         format.html { render action: 'new' }
@@ -56,6 +56,6 @@ class RecipientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recipient_params
-      params.require(:recipient).permit(:name, :categorie)
+      params.require(:recipient).permit(:name, :category)
     end
 end

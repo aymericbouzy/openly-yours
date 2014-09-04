@@ -3,3 +3,7 @@
 <%= render 'author_aside', author: @letter.author %>
 
 <%= sanitize @letter.text %>
+
+<% if @letter.rough_draft %>
+  <%= link_to "Rough drafts", rough_drafts_me_letters_path %>
+<% end %>

@@ -8,7 +8,7 @@ class Recipient
   has_one :user
 
   def self.categories
-    [:person, :organization, :group]
+    ["person", "organization", "group"]
   end
 
   validates :category, inclusion: { in: categories, message: "%{value} is not a valid categorie" }

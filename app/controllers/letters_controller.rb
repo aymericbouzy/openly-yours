@@ -41,17 +41,16 @@ class LettersController < ApplicationController
     @letter = current_user.letters.new(letter_params)
     @recipient = find_recipient
     @letter.recipient = @recipient
-    debugger
     render :new and return unless @recipient.persisted?
     @letter.rough_draft = true
 
     respond_to do |format|
       if @letter.save
-        format.html { redirect_to @letter, notice: 'Letter was successfully created.' and return }
-        format.json { render action: 'show', status: :created, location: @letter and return }
+        format.html { redirect_to @letter, notice: 'Letter was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @letter }
       else
-        format.html { render action: 'new' and return }
-        format.json { render json: @letter.errors, status: :unprocessable_entity and return }
+        format.html { render action: 'new' }
+        format.json { render json: @letter.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,6 +58,10 @@ class LettersController < ApplicationController
   # PATCH/PUT /me/letters/1
   # PATCH/PUT /me/letters/1.json
   def update
+    @recipient = find_recipient
+    @letter.recipient = @recipient
+    render :new and return unless @recipient.persisted?
+
     respond_to do |format|
       if @letter.update(letter_params)
         format.html { redirect_to @letter, notice: 'Letter was successfully updated.' }
@@ -75,7 +78,7 @@ class LettersController < ApplicationController
   def destroy
     @letter.destroy
     respond_to do |format|
-      format.html { redirect_to users_letters_url }
+      format.html { redirect_to rough_drafts_me_letters_path }
       format.json { head :no_content }
     end
   end

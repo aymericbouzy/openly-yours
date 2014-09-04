@@ -1,4 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_recipient_path(@recipient) %> |
-<%= link_to 'Back', recipients_path %>
+<h1>Recipient's Profile</h1>
+<p>
+  <%= @recipient.name %> <span class="label label-primary"><%= @recipient.category %></span>
+</p>
+<p>
+  Created at <%= @recipient.created_at.to_s %>
+</p>
+<p>
+  Was sent <%= link_to pluralize(@recipient.published_letters.count, "letter"), recipient_letters_path(@recipient) %>
+</p>

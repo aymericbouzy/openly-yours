@@ -19,6 +19,9 @@
     <% if alert.present? %>
       <p class="alert alert-danger" role="alert"><%= alert %></p>
     <% end %>
+    <% if warning.present? %>
+      <p class="alert alert-warning" role="alert"><%= warning %></p>
+    <% end %>
 
     <%= yield %>
   </main>

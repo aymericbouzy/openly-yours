@@ -3,6 +3,7 @@ class LettersController < ApplicationController
   before_action :set_letter, except: [:index, :user_index, :me_index, :new, :followed, :rough_drafts]
   before_action :letter_unpublished_yet!, only: [:edit, :update, :destroy, :publish]
   before_action :authenticate_user!, except: [:index, :user_index, :show, :follow, :followers, :followed, :rough_drafts]
+  before_action :find_recipient, only: [:create]
 
   # GET /letters
   # GET /letters.json
@@ -38,6 +39,7 @@ class LettersController < ApplicationController
   # POST /me/letters.json
   def create
     @letter = current_user.letters.new(letter_params)
+    @letter.recipient = @recipient
     @letter.rough_draft = true
 
     respond_to do |format|
@@ -124,6 +126,19 @@ class LettersController < ApplicationController
       end
     end
 
+    def find_recipient
+      if params[:recipient_name].blank?
+        flash[:alert] = "error"
+        render 'new' and return
+      else
+        set = Recipient.where(name: params[:recipient_name])
+        case set.count
+        when 0
+          flash[:warning] = "warning"
+          
+      end
+    end
+
     def letter_unpublished_yet!
       if @letter.published?
         flash[:alert] = "refused"
@@ -133,7 +148,7 @@ class LettersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def letter_params
-      params.require(:letter).permit(:title, :text, :recipient_id)
+      params.require(:letter).permit(:title, :text)
     end
 
 end

@@ -12,6 +12,10 @@ class RecipientsController < ApplicationController
   def show
   end
 
+  def new
+    @recipient = Recipient.new(session[:recipient_name])
+  end
+
 
   # POST /recipients
   # POST /recipients.json

@@ -1,5 +1,22 @@
-<h1>New recipient</h1>
+<h1><%= @recipient.name %></h1>
 
-<%= render 'form' %>
+<%= bootstrap_form_for(@recipient) do |f| %>
+  <% if @recipient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipient.errors.count, "error") %> prohibited this recipient from being saved:</h2>
 
-<%= link_to 'Back', recipients_path %>
+      <ul>
+      <% @recipient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :name %>
+  <%= f.select select_options(Recipient.categories, @recipient.category), label: "Choose a category for that recipient" %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

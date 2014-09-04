@@ -15,8 +15,8 @@
 
   <%= f.text_area :text, rows: 20, class: "ckeditor", name: "editor1" %>
 
-  <%= f.fields_for :recipient do |builder| %>
-    <%= builder.text_field :name %>
+  <%= f.fields_for :recipient do |recipient_f| %>
+    <%= recipient_f.text_field :name %>
   <% end %>
 
   <div class="actions">

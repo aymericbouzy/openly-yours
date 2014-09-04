@@ -14,13 +14,13 @@
   <%= render 'header' %>
   <main class="container">
     <% if notice.present? %>
-      <p class="alert alert-success" role="alert"><%= sanitize notice %></p>
+      <p class="alert alert-success" role="alert"><%= notice %></p>
     <% end %>
     <% if alert.present? %>
-      <p class="alert alert-danger" role="alert"><%= sanitize alert %></p>
+      <p class="alert alert-danger" role="alert"><%= alert %></p>
     <% end %>
     <% if warning.present? %>
-      <p class="alert alert-warning" role="alert"><%= sanitize warning %></p>
+      <p class="alert alert-warning" role="alert"><%= warning %></p>
     <% end %>
 
     <%= yield %>

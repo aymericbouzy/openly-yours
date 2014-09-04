@@ -28,7 +28,7 @@ class LettersController < ApplicationController
   # GET /me/letters/new
   def new
     @letter = Letter.new(session.delete("letter"))
-    @letter.recipient = Recipient.new(name: session.delete("recipient_name"))
+    @letter.recipient = Recipient.where(name: session.delete("recipient_name")).first
   end
 
   # GET /me/letters/1/edit
@@ -39,7 +39,10 @@ class LettersController < ApplicationController
   # POST /me/letters.json
   def create
     @letter = current_user.letters.new(letter_params)
-    @letter.recipient = find_recipient
+    @recipient = find_recipient
+    @letter.recipient = @recipient
+    debugger
+    render :new and return unless @recipient.persisted?
     @letter.rough_draft = true
 
     respond_to do |format|
@@ -127,23 +130,21 @@ class LettersController < ApplicationController
     end
 
     def find_recipient
-      debugger
       recipient_name = params[:letter][:recipient][:name] if params[:letter].present? && params[:letter][:recipient].present?
       if recipient_name.blank?
         flash[:alert] = "Please indicate a recipient."
-        render :new and return
+        recipient = Recipient.new(name: "")
       else
-        set = Recipient.where(name: recipient_name)
-        # case set.count
-        # when 0
-        #   flash[:warning] = "This recipient does not exist yet. #{link_to "Create it!", new_recipient_path, class: "alert-link"}"
-        #   session[:letter] = letter_params
-        #   session[:recipient_name] = recipient_name
-        #   render :new and return
-        # else
-        #   recipient = set.first
-        # end
-        recipient = set.first
+        recipients = Recipient.where(name: recipient_name).all
+        case recipients.count
+        when 0
+          flash[:warning] = "This recipient does not exist yet. #{view_context.link_to "Create it!", new_recipient_path, class: "alert-link"}".html_safe
+          session[:letter] = letter_params
+          session[:recipient_name] = recipient_name
+          recipient = Recipient.new(name: recipient_name)
+        else
+          recipient = recipients.first
+        end
       end
       recipient
     end

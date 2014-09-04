@@ -27,7 +27,7 @@ OpenlyYours::Application.routes.draw do
     end
   end
 
-  resources :recipients, only: [:index, :show] do
+  resources :recipients do
     get 'letters'
   end
 

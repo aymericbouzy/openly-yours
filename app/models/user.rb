@@ -53,6 +53,10 @@ class User
     end
   end
 
+  def is_admin?
+    false
+  end
+
   def rough_drafts
     self.letters.where(rough_draft: true)
   end

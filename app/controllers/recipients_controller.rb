@@ -1,5 +1,6 @@
 class RecipientsController < ApplicationController
-  before_action :set_recipient, only: [:show]
+  before_action :set_recipient, except: [:index, :new, :create]
+  before_action :authenticate_user!, :user_is_admin, except: [:index, :show, :new, :create, :letters]
 
   # GET /recipients
   # GET /recipients.json
@@ -35,6 +36,16 @@ class RecipientsController < ApplicationController
 
   def letters
     @letters = @recipient.letters
+  end
+
+  #TODO
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
   end
 
   private

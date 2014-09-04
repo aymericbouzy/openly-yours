@@ -13,4 +13,8 @@ class Recipient
 
   validates :category, inclusion: { in: categories, message: "%{value} is not a valid categorie" }
   validates :name, presence: true, uniqueness: true
+
+  def published_letters
+    self.letters.where(rough_draft: false).all
+  end
 end

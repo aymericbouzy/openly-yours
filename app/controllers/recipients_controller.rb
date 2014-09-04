@@ -1,5 +1,6 @@
 class RecipientsController < ApplicationController
-  before_action :set_recipient, except: [:index, :new, :create]
+  before_action :set_recipient, except: [:index, :new, :create, :letters]
+  before_action :set_recipient_on_member, only: [:letters]
   before_action :authenticate_user!, :user_is_admin, except: [:index, :show, :new, :create, :letters]
 
   # GET /recipients
@@ -35,7 +36,7 @@ class RecipientsController < ApplicationController
   end
 
   def letters
-    @letters = @recipient.letters
+    @letters = @recipient.published_letters
   end
 
   #TODO
@@ -52,6 +53,10 @@ class RecipientsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_recipient
       @recipient = Recipient.find(params[:id])
+    end
+
+    def set_recipient_on_member
+      @recipient = Recipient.find(params[:recipient_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

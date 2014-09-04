@@ -1,25 +1,22 @@
-<h1>Listing recipients</h1>
+<h1>Browse by recipients</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @recipients.each do |recipient| %>
+<% if @recipients.any? %>
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <td><%= link_to 'Show', recipient %></td>
-        <td><%= link_to 'Edit', edit_recipient_path(recipient) %></td>
-        <td><%= link_to 'Destroy', recipient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Letters</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Recipient', new_recipient_path %>
+    </thead>
+    <tbody>
+      <% @recipients.each do |recipient| %>
+        <tr>
+          <td><%= link_to recipient.name, recipient %> <span class="label label-primary"><%= recipient.category %></span></td>
+          <td><%= link_to pluralize(recipient.published_letters.count, "letter"), recipient_letters_path(recipient) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p><i>No recipient yet.</i></p>
+<% end %>

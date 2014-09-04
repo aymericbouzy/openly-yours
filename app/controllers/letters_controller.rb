@@ -28,7 +28,8 @@ class LettersController < ApplicationController
 
   # GET /me/letters/new
   def new
-    @letter = Letter.new
+    @letter = Letter.new(session.delete("letter"))
+    @letter.recipient.build(name: session.delete("recipient_name"))
   end
 
   # GET /me/letters/1/edit
@@ -127,15 +128,21 @@ class LettersController < ApplicationController
     end
 
     def find_recipient
-      if params[:recipient_name].blank?
-        flash[:alert] = "error"
+      recipient_name = params[:letter][:recipient][:name] if params[:letter].present? && params[:letter][:recipient].present?
+      if recipient_name.blank?
+        flash[:alert] = "Please indicate a recipient."
         render 'new' and return
       else
-        set = Recipient.where(name: params[:recipient_name])
+        set = Recipient.where(name: recipient_name)
         case set.count
         when 0
-          flash[:warning] = "warning"
-          
+          flash[:warning] = "This recipient does not exist yet. #{link_to "Create it!", new_recipient_path, class: "alert-link"}"
+          session[:letter] = letter_params
+          session[:recipient_name] = recipient_name
+          render 'new' and return
+        else
+          @recipient = set.first
+        end
       end
     end
 

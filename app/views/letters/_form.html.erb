@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@letter, as: :letter, url: me_letters_path) do |f| %>
+<%= bootstrap_form_for(@letter, as: :letter, url: me_letters_path, method: :post) do |f| %>
   <% if @letter.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@letter.errors.count, "error") %> prohibited this letter from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <%= f.text_field :title %>
 
-  <%= f.text_area :text, rows: 20, class: "ckeditor", name: "editor1" %>
+  <%= f.text_area :text, rows: 20 %>
 
   <%= f.fields_for :recipient do |recipient_f| %>
     <%= recipient_f.text_field :name %>

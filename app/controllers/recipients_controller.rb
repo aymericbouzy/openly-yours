@@ -13,7 +13,7 @@ class RecipientsController < ApplicationController
   end
 
   def new
-    @recipient = Recipient.new(session[:recipient_name])
+    @recipient = Recipient.new(name: session[:recipient_name])
   end
 
 
@@ -24,7 +24,7 @@ class RecipientsController < ApplicationController
 
     respond_to do |format|
       if @recipient.save
-        format.html { redirect_to @recipient, notice: 'Recipient was successfully created.' }
+        format.html { redirect_to new_letter_path, notice: 'Recipient was successfully created.' }
         format.json { render action: 'show', status: :created, location: @recipient }
       else
         format.html { render action: 'new' }

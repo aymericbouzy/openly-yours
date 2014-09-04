@@ -1,9 +1,8 @@
 class LettersController < ApplicationController
   before_action :set_user
-  before_action :set_letter, except: [:index, :user_index, :me_index, :new, :followed, :rough_drafts]
+  before_action :set_letter, except: [:index, :user_index, :me_index, :new, :create, :followed, :rough_drafts]
   before_action :letter_unpublished_yet!, only: [:edit, :update, :destroy, :publish]
   before_action :authenticate_user!, except: [:index, :user_index, :show, :follow, :followers, :followed, :rough_drafts]
-  before_action :find_recipient, only: [:create]
 
   # GET /letters
   # GET /letters.json
@@ -29,7 +28,7 @@ class LettersController < ApplicationController
   # GET /me/letters/new
   def new
     @letter = Letter.new(session.delete("letter"))
-    @letter.recipient.build(name: session.delete("recipient_name"))
+    @letter.recipient = Recipient.new(name: session.delete("recipient_name"))
   end
 
   # GET /me/letters/1/edit
@@ -40,16 +39,16 @@ class LettersController < ApplicationController
   # POST /me/letters.json
   def create
     @letter = current_user.letters.new(letter_params)
-    @letter.recipient = @recipient
+    @letter.recipient = find_recipient
     @letter.rough_draft = true
 
     respond_to do |format|
       if @letter.save
-        format.html { redirect_to @letter, notice: 'Letter was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @letter }
+        format.html { redirect_to @letter, notice: 'Letter was successfully created.' and return }
+        format.json { render action: 'show', status: :created, location: @letter and return }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @letter.errors, status: :unprocessable_entity }
+        format.html { render action: 'new' and return }
+        format.json { render json: @letter.errors, status: :unprocessable_entity and return }
       end
     end
   end
@@ -128,22 +127,25 @@ class LettersController < ApplicationController
     end
 
     def find_recipient
+      debugger
       recipient_name = params[:letter][:recipient][:name] if params[:letter].present? && params[:letter][:recipient].present?
       if recipient_name.blank?
         flash[:alert] = "Please indicate a recipient."
-        render 'new' and return
+        render :new and return
       else
         set = Recipient.where(name: recipient_name)
-        case set.count
-        when 0
-          flash[:warning] = "This recipient does not exist yet. #{link_to "Create it!", new_recipient_path, class: "alert-link"}"
-          session[:letter] = letter_params
-          session[:recipient_name] = recipient_name
-          render 'new' and return
-        else
-          @recipient = set.first
-        end
+        # case set.count
+        # when 0
+        #   flash[:warning] = "This recipient does not exist yet. #{link_to "Create it!", new_recipient_path, class: "alert-link"}"
+        #   session[:letter] = letter_params
+        #   session[:recipient_name] = recipient_name
+        #   render :new and return
+        # else
+        #   recipient = set.first
+        # end
+        recipient = set.first
       end
+      recipient
     end
 
     def letter_unpublished_yet!

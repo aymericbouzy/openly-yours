@@ -52,7 +52,7 @@ class User
       self.first_name.capitalize + " " + self.last_name.capitalize
     end
   end
-
+  
   def is_admin?
     false
   end
@@ -72,10 +72,14 @@ class User
   end
 
   def follow(letter)
-    self != letter.author && self.followships.create(letter_id: letter.id.to_s)
+    self.followships.create(letter_id: letter.id)
+  end
+
+  def unfollow(letter)
+    self.followships.where(letter_id: letter.id).first.destroy
   end
 
   def followed?(letter)
-    self.followed_letters.find(letter.id).present?
+    self.followships.where(letter_id: letter.id).any?
   end
 end

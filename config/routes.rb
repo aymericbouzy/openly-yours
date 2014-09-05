@@ -3,8 +3,11 @@ OpenlyYours::Application.routes.draw do
   devise_for :users
 
   resources :letters, only: [:index, :show] do
-    put 'follow'
-    get 'followers'
+    member do
+      put 'follow'
+      put 'unfollow'
+      get 'followers'
+    end
   end
 
   resources :users, only: [:index, :show] do

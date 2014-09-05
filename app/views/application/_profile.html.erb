@@ -2,9 +2,11 @@
 <p>
   <%= user.identity %>
 </p>
-<p>
-  <%= user.email %>
-</p>
+<% if user == current_user %>
+  <p>
+    <%= user.email %>
+  </p>
+<% end %>
 <p>
   Created at <%= user.created_at.to_s %>
 </p>

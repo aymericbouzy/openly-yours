@@ -2,7 +2,7 @@ class LettersController < ApplicationController
   before_action :set_user
   before_action :set_letter, except: [:index, :user_index, :me_index, :new, :create, :followed, :rough_drafts]
   before_action :letter_unpublished_yet!, only: [:edit, :update, :destroy, :publish]
-  before_action :authenticate_user!, except: [:index, :user_index, :show, :follow, :followers, :followed, :rough_drafts]
+  before_action :authenticate_user!, except: [:index, :user_index, :show, :followers, :followed, :rough_drafts]
 
   # GET /letters
   # GET /letters.json
@@ -85,10 +85,20 @@ class LettersController < ApplicationController
 
   # GET /letters/1/follow
   def follow
-    if current_user.follow(@letter)
-      flash[:notice] = "success"
+    if current_user == @letter.author
+      flash[:warning] = "You cannot follow a letter you wrote."
     else
-      flash[:alert] = "error"
+      flash[:alert] = "Sorry, an error occured." unless current_user.follow(@letter)
+    end
+    render 'show'
+  end
+
+  # GET /letters/1/unfollow
+  def unfollow
+    if current_user.followed?(@letter)
+      flash[:alert] = "Sorry, an error occured." unless current_user.unfollow(@letter)
+    else
+      flash[:warning] = "You cannot unfollow a letter you were not following."
     end
     render 'show'
   end

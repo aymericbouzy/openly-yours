@@ -1,4 +1,12 @@
-<h2><%= @letter.title %></h2>
+<h2>
+  <%= @letter.title %>
+  <span class="follow-switch">
+    <% if !user_signed_in? || current_user != @letter.author %>
+      <%= follow_switch(@letter) %>
+    <% end %>
+  </span>
+  <small><%= link_to pluralize(@letter.followships.count, "follower"), followers_letter_path(@letter) %></small>
+</h2>
 
 <%= render 'author_aside', author: @letter.author %>
 

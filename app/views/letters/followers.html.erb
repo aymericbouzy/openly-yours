@@ -1,0 +1,22 @@
+<h1>People who follow "<%= link_to @letter.title, @letter %>"</h1>
+
+<% if @letter.followships.any? %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Followed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @letter.followships.each do |followship| %>
+        <tr>
+          <td><%= link_to followship.user.identity, followship.user %></td>
+          <td><%= followship.created_at %> ago.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p><i>No followers yet.</i></p>
+<% end %>

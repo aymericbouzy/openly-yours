@@ -18,6 +18,7 @@
         &:hover {
           color: $nav-link-hover-color;
           border: solid 1px $nav-link-hover-color;
+          background-color: transparent;
         }
       }
     }
@@ -47,4 +48,19 @@
       color: $nav-link-hover-color;
       border-color: transparent;
     }
+  }
+
+  .btn-default {
+    color: $nav-link-color;
+    border: solid 1px transparent;
+    background-color: transparent;
+    &:hover {
+      color: $nav-link-hover-color;
+      border: solid 1px $nav-link-hover-color;
+      background-color: transparent;
+    }
+  }
+
+  .remember-me {
+    color: $nav-link-color;
   }

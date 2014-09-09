@@ -16,7 +16,7 @@
   <%= f.text_area :text, rows: 20 %>
 
   <%= f.fields_for :recipient, @letter.recipient do |recipient_f| %>
-    <%= recipient_f.text_field :name %>
+    <%= recipient_f.text_field :name, label: "Recipient" %>
   <% end %>
 
   <div class="actions">

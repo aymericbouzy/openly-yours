@@ -33,17 +33,20 @@
   }
 
   .pull-right {
+    position: relative;
     right: 0px;
+    z-index: 0;
   }
 
   .pull-center {
     position: absolute;
     left: 45%;
+    z-index: 1;
   }
 
-  .icon-rooster-logo {
+  .the-rooster {
     color: $nav-link-color;
-    font-size: 5em;
+    font-size: 2em;
     &:hover {
       color: $nav-link-hover-color;
       border-color: transparent;

@@ -28,4 +28,6 @@ OpenlyYours::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  ENV["REDISTOGO_URL"] = 'redis://localhost:6379'
 end

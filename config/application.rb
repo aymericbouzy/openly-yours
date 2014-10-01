@@ -25,5 +25,6 @@ module OpenlyYours
     # config.i18n.default_locale = :de
 
     config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+    config.serve_static_assets = true
   end
 end
